@@ -1,0 +1,50 @@
+Create New Database :
+
+> use test
+
+Adding Collection to Database :
+
+> db.createCollection('users')
+
+Insert New Record into Collection :
+
+> db.users.insert({"first_name":"Prasad", "last_name":"Baviskar",  "email":"p@gmail.com", "gender":"male", "ip_address":"127.0.0.1", "age": "22"})
+
+> db.users.insertMany([
+			{"first_name":"Prasad", "last_name":"B",  "email":"p1@gmail.com", "gender":"male", "ip_address":"127.5.0.1", "age": "21"},
+			{"first_name":"D", "last_name":"Sonar",  "email":"d@gmail.com", "gender":"male", "ip_address":"127.0.0.3", "age": "24"}, 
+		      	{"first_name":"S", "last_name":"Gunj",  "email":"s@gmail.com", "gender":"male", "ip_address":"127.0.0.4", "age": "25"},
+			{"first_name":"Rahul", "last_name":"G",  "email":"a@gmail.com", "gender":"male", "ip_address":"127.0.0.5", "age": "26"},
+			{"first_name":"Harshal", "last_name":"Jadhav",  "email":"b@gmail.com", "gender":"male", "ip_address":"127.0.0.6", "age": "25"},
+			{"first_name":"Harry", "last_name":"Patil",  "email":"f@gmail.com", "gender":"male", "ip_address":"127.0.0.7", "age": "23"},			
+			{"first_name":"Avi", "last_name":"Patil",  "email":"h@gmail.com", "gender":"male", "ip_address":"127.0.0.8", "age": "22"},
+			{"first_name":"D", "last_name":"Ahire",  "email":"j@gmail.com", "gender":"male", "ip_address":"127.0.0.9", "age": "21"},
+			{"first_name":"A", "last_name":"B",  "email":"k@gmail.com", "gender":"male", "ip_address":"127.0.1.7", "age": "20"}
+		      ])
+
+Read Data From Collection
+
+> db.users.find({}).pretty()
+
+> db.users.findOne({"first_name" : "Prasad"})
+
+Update Data in Collection
+
+> db.users.update({first_name: "Rahul"}, {$set:{last_name:"Garud"}})
+
+> db.users.updateMany({"first_name" : "Prasad"},{$set:{state:"Maharashtra"}})
+
+Delete Data in Collection
+
+> db.users.deleteOne({first_name:"Avi"})
+
+> db.users.deleteMany({state:"Maharashtra"})
+
+Remove Existing Database :
+
+> db.dropDatabase()
+
+
+
+
+
