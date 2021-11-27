@@ -28,14 +28,16 @@ app.get("/books/:id",(req, res)=>{
 });
 
 app.post("/books",(req, res)=>{
-    const newBooks = [...books, req.body];
+    var newBooks = [...books, req.body];
 
-    res.send(newBooks);
+    let data = {api_requested_by: req.name,book:newBooks}
+
+    res.send(data);
 })
 
-app.patch("/:id",(req, res)=>{
+app.patch("/:id",(req, res)=>{ 
 
-    const newBook = books.map((book)=>{
+    var newBook = books.map((book)=>{
         if(book.id == req.params.id){
             if(req?.body?.id) book.id = req.body.id;
             if(req?.body?.author) book.author = req.body.author;
@@ -46,14 +48,18 @@ app.patch("/:id",(req, res)=>{
         return book;
     });
 
-    res.send(newBook);
+    newBook = Object(newBook)
+    let data = {api_requested_by: req.name, book:newBook}
+
+    res.send(data);
 })
 
 
 app.delete("/:id",(req, res)=>{
-    const newBooks = books.filter((book) => book.id != req.params.id);
+    var newBooks = books.filter((book) => book.id != req.params.id);
 
-    res.send(newBooks)
+    let data = {api_requested_by: req.name, books:newBooks}
+    res.send(data)
 })
 
 app.listen(1234,function(){
