@@ -1,12 +1,36 @@
 const express = require("express");
-const app = express();
-const User = require("../models/user.model");
+const router = express.Router();
 
-app.post("/", async (req, res) => {
+const User = require("../models/user.model");
+const Gallery = require("../models/gallery.model");
+
+const upload = require("../middleware/upload");
+
+router.post("/", upload.single("profile_pic"), async (req, res) => {
   try {
-    const user = User.create(req.body);
-    res.status(201).send(user);
+    const user = await User.create({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      profile_pic: req.file.path,
+    });
+    res.status(201).json({ user });
   } catch (error) {
-    res.status(500).json({ message: error.message, status: "Failed" });
+    return res.status(500).json({ message: error.message, status: "Failed" });
   }
 });
+
+router.post("/gallery", upload.any("pictures"), async (req, res) => {
+    const img_list = req.files.map((file) => file.path);
+  console.log("Prasad");
+  try {
+    const pics = await Gallery.create({
+      user: req.body.user,
+      pictures: img_list,
+    });
+    res.status(201).json({ pics });
+  } catch (error) {
+    return res.status(500).json({ message: error.message, status: "Failed" });
+  }
+});
+
+module.exports = router;
