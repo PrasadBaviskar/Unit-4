@@ -4,8 +4,12 @@ const router = express.Router();
 const transport = require("../configs/mail");
 
 router.get("/", async (req, res) => {
-  
-  res.send("users");
+  let page = +req.query.page || 1;
+  let size = +req.query.size || 3;
+
+  let sk = (page - 1) * size;
+  const users = await User.find().skip(sk).limit(size).lean().exec();
+  res.send(users);
 });
 
 router.post("/", async (req, res) => {
