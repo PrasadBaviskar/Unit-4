@@ -3,6 +3,7 @@ const User = require("../models/user.model");
 const router = express.Router();
 const transport = require("../configs/mail");
 
+
 router.get("/", async (req, res) => {
   let page = +req.query.page || 1;
   let size = +req.query.size || 3;
