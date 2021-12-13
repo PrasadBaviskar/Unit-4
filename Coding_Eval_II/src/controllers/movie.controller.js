@@ -3,6 +3,16 @@ const router = express.Router();
 const upload = require("../middlewares/upload");
 const Movie = require("../models/movie.model");
 
+router.get("/:actors", async (req, res) => {
+  try {
+    const movies = await Movie.find({ actors: { $in: [req.params.actors] } });
+
+    res.status(201).send(movies);
+  } catch (e) {
+    return res.status(500).json({ message: e.message, status: "Failed" });
+  }
+});
+
 router.post("/", upload.single("poster_url"), async (req, res) => {
   try {
     const movie = await Movie.create({
