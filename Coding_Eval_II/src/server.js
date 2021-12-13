@@ -3,8 +3,10 @@ const connect = require("./configs/db");
 const app = express();
 
 const userController = require("./controllers/user.controller");
+const movieController = require("./controllers/movie.controller");
 
 app.use("/user", userController);
+app.use("/movie", movieController);
 
 const start = async () => {
   await connect();
